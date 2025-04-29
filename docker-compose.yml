@@ -9,7 +9,10 @@ services:
       - dsb-net
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_BASE: http://localhost:5000
     container_name: dsb-frontend
     ports:
       - "3000:3000"

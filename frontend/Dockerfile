@@ -1,4 +1,4 @@
-# Step 1: Build the app using Node
+# Build the app using Node
 FROM node:18 AS builder
 
 WORKDIR /app
@@ -7,9 +7,14 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+
+# Set build-time env
+ARG NEXT_PUBLIC_API_BASE
+ENV NEXT_PUBLIC_API_BASE=$NEXT_PUBLIC_API_BASE
+
 RUN npm run build
 
-# Step 2: Run with minimal image using Next.js' built-in server
+# Run with minimal image using Next.js' built-in server
 FROM node:18-slim
 
 WORKDIR /app
